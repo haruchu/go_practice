@@ -1,9 +1,9 @@
 package main
 
 import (
-	"chat/trace"
 	"log"
 	"net/http"
+	"chat/trace"
 	"github.com/gorilla/websocket"
 )
 

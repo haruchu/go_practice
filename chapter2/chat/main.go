@@ -35,7 +35,9 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	err := godotenv.Load(".env")
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err)
+	}
 	go_client_id := os.Getenv("GO_CLIENT_ID")
 	go_client_secret := os.Getenv("GO_CLIENT_SECRET")
 	var addr = flag.String("addr", ":8080", "アプリケーションのアドレス")

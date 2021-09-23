@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chat/trace"
+	"github.com/haruki00000000/go_practice/chapter2/trace"
 	"log"
 	"net/http"
 

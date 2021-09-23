@@ -10,8 +10,6 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/haruki00000000/go_practice/chapter2/trace"
-
 	"github.com/joho/godotenv"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/gomniauth/providers/facebook"

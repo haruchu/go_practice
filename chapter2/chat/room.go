@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/haruki00000000/go_practice/chapter2/trace"
+	"github.com/matryer/goblueprints/chapter1/trace"
 	"log"
 	"net/http"
 

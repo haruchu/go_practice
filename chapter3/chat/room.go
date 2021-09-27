@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/matryer/goblueprints/chapter1/trace"
 	"log"
 	"net/http"
+
+	"github.com/matryer/goblueprints/chapter1/trace"
 
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/objx"
@@ -20,15 +21,18 @@ type room struct {
 	clients map[*client]bool
 	// tracerはチャットルーム上で行われた操作のログを受け取ります。
 	tracer trace.Tracer
+
+	avatar Avatar
 }
 
-func newRoom() *room {
+func newRoom(avatar Avatar) *room {
 	return &room{
 		forward: make(chan *message),
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
 		tracer:  trace.Off(),
+		avatar:  avatar,
 	}
 }
 

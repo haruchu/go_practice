@@ -56,7 +56,7 @@ func main() {
 		github.New("クライアントID", "秘密の値", "http://localhost:8080/auth/callback/github"),
 		google.New(go_client_id, go_client_secret, "http://localhost:8080/auth/callback/google"),
 	)
-	r := newRoom(UseGravatar)
+	r := newRoom(UseFileSystemAvatar)
 	// r.tracer = trace.New(os.Stdout) でターミナルにログを出力
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
@@ -73,6 +73,9 @@ func main() {
 	})
 	http.Handle("/upload", &templateHandler{filename: "upload.html"})
 	http.HandleFunc("/uploader", uploaderHandler)
+	http.Handle("/avatars/",
+		http.StripPrefix("/avatars/",
+			http.FileServer(http.Dir("./avatars"))))
 	http.Handle("/room", r)
 	// チャットルームを開始します
 	go r.run()

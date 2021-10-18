@@ -2,18 +2,20 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/garyburd/go-oauth/oauth"
-	"github.com/joeshaw/envdecode"
+	"github.com/joho/godotenv"
 )
 
 var conn net.Conn
@@ -48,23 +50,32 @@ var (
 )
 
 func setupTwitterAuth() {
-	var ts struct {
-		ConsumerKey    string `env:"SP_TWITTER_KEY,required"`
-		ConsumerSecret string `env:"SP_TWITTER_SECRET,required"`
-		AccessToken    string `env:"SP_TWITTER_ACCESSTOKEN,required"`
-		AccessSecret   string `env:"SP_TWITTER_ACCESSSECRET,required"`
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println(err)
 	}
-	if err := envdecode.Decode(&ts); err != nil {
-		log.Fatalln(err)
-	}
+	twitter_key := os.Getenv("SP_TWITTER_KEY")
+	twitter_secret := os.Getenv("SP_TWITTER_SECRET")
+	twitter_access_token := os.Getenv("SP_TWITTER_ACCESSTOKEN")
+	twitter_access_secret := os.Getenv("SP_TWITTER_ACCESSSECRET")
+
+	// var ts struct {
+	// 	ConsumerKey    string `env:"SP_TWITTER_KEY,required"`
+	// 	ConsumerSecret string `env:"SP_TWITTER_SECRET,required"`
+	// 	AccessToken    string `env:"SP_TWITTER_ACCESSTOKEN,required"`
+	// 	AccessSecret   string `env:"SP_TWITTER_ACCESSSECRET,required"`
+	// }
+	// if err := envdecode.Decode(&ts); err != nil {
+	// 	log.Fatalln(err)
+	// }
 	creds = &oauth.Credentials{
-		Token:  ts.AccessToken,
-		Secret: ts.AccessSecret,
+		Token:  twitter_access_token,
+		Secret: twitter_access_secret,
 	}
 	authClient = &oauth.Client{
 		Credentials: oauth.Credentials{
-			Token:  ts.ConsumerKey,
-			Secret: ts.ConsumerSecret,
+			Token:  twitter_key,
+			Secret: twitter_secret,
 		},
 	}
 }
